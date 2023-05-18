@@ -24,8 +24,7 @@ public class Account {
 
         Account account = (Account) o;
 
-        if (!number.equals(account.number)) return false;
-        return amount.equals(account.amount);
+        return number.equals(account.number);
     }
 
     @Override
