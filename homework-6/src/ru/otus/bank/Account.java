@@ -2,21 +2,19 @@ package ru.otus.bank;
 
 public class Account {
     private final Long number;
-    private final Long clientId;
     private Integer amount;
 
-    public Account(Long number, Long clientId, Integer amount) {
+    public Account(Long number, Integer amount) {
         this.number = number;
-        this.clientId = clientId;
         this.amount = amount;
     }
 
-    public Account(Long number, Long clientId) {
-        this(number, clientId, 0);
+    public Account(Long number) {
+        this(number, 0);
     }
 
-    public Long getClientId() {
-        return clientId;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     @Override
@@ -27,22 +25,18 @@ public class Account {
         Account account = (Account) o;
 
         if (!number.equals(account.number)) return false;
-        if (!clientId.equals(account.clientId)) return false;
         return amount.equals(account.amount);
     }
 
     @Override
     public int hashCode() {
-        int result = number.hashCode();
-        result = 31 * result + clientId.hashCode();
-        return result;
+        return number.hashCode();
     }
 
     @Override
     public String toString() {
         return "Account{" +
                 "number=" + number +
-                ", clientId=" + clientId +
                 ", amount=" + amount +
                 '}';
     }

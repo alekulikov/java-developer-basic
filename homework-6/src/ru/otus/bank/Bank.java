@@ -1,32 +1,34 @@
 package ru.otus.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Bank {
-    private final Map<Long, List<Account>> clientIdMapAccounts = new HashMap<>();
-    private final Map<Long, Client> clientIdMapClient = new HashMap<>();
+    private final Map<Client, Set<Account>> clientMapAccounts = new HashMap<>();
+    private final Map<Account, Client> accountMapClient = new HashMap<>();
 
-    public void addClients(Client... clients) {
+    public void addClients(Set<Client> clients) {
         for (Client client : clients) {
-            clientIdMapClient.put(client.getId(), client);
+            clientMapAccounts.computeIfAbsent(client, k -> new HashSet<>());
         }
     }
 
-    public void addAccounts(Account... accounts) {
-        for (Account account : accounts) {
-            List<Account> clientsAccounts = clientIdMapAccounts.computeIfAbsent(account.getClientId(), k -> new ArrayList<>());
-            clientsAccounts.add(account);
+    public void addAccounts(Map<Client, Set<Account>> accounts) {
+        for (Map.Entry<Client, Set<Account>> entry : accounts.entrySet()) {
+            if (clientMapAccounts.containsKey(entry.getKey())) {
+                Set<Account> existsClientsAccounts = clientMapAccounts.get(entry.getKey());
+                for (Account account : entry.getValue()) {
+                    accountMapClient.computeIfAbsent(account, k -> entry.getKey());
+                    existsClientsAccounts.add(account);
+                }
+            }
         }
     }
 
-    public List<Account> getAccounts(Client client) {
-        return clientIdMapAccounts.get(client.getId());
+    public Set<Account> getAccounts(Client client) {
+        return clientMapAccounts.get(client);
     }
 
     public Client findClient(Account account) {
-        return clientIdMapClient.get(account.getClientId());
+        return accountMapClient.get(account);
     }
 }
