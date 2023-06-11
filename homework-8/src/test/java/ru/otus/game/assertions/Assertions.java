@@ -14,9 +14,25 @@ public class Assertions {
         }
     }
 
-    public static void assertEquals(String expected, String actual) {
+    public static void assertEquals(Object expected, Object actual) {
         if (!expected.equals(actual)) {
             throw new AssertionError(String.format("Expected \"%s\" = \"%s\"", expected, actual));
+        }
+    }
+
+    public static void assertThrows(Class<? extends Throwable> expected, Runnable code) {
+        Throwable actual = null;
+        try {
+            code.run();
+        } catch (Throwable e) {
+            actual = e;
+        }
+        if (actual == null) {
+            throw new AssertionError("Given code does not throw any exception");
+        }
+
+        if (!actual.getClass().equals(expected)) {
+            throw new AssertionError(String.format("Expected \"%s\" = \"%s\"", expected.getSimpleName(), actual.getClass().getSimpleName()));
         }
     }
 

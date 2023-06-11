@@ -9,12 +9,15 @@ public class DiceImplTest {
     public void testRangeOfPossibleValues() {
         String scenario = "Тест выпадания чисел на кубике в диапозоне от 1 до 6";
         Dice dice = new DiceImpl();
-        try {
-            int actual = dice.roll();
-            Assertions.assertTrue(actual <= 6 && actual > 0);
-            System.out.printf("\"%s\" passed %n", scenario);
-        } catch (Throwable e) {
-            System.err.printf("\"%s\" fails with message \"%s\" %n", scenario, e.getMessage());
+        for (int i = 0; i < 10; i++) {
+            try {
+                int actual = dice.roll();
+                Assertions.assertTrue(actual <= 6 && actual > 0);
+            } catch (Throwable e) {
+                System.err.printf("\"%s\" fails with message \"%s\" %n", scenario, e.getMessage());
+                return;
+            }
         }
+        System.out.printf("\"%s\" passed %n", scenario);
     }
 }

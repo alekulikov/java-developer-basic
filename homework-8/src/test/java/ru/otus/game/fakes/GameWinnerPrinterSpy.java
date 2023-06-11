@@ -6,14 +6,15 @@ import ru.otus.game.Player;
 import java.util.List;
 
 public class GameWinnerPrinterSpy implements GameWinnerPrinter {
-    private final List<String> actualFlow;
+    private final List<Object> actualFlow;
 
-    public GameWinnerPrinterSpy(List<String> actualFlow) {
+    public GameWinnerPrinterSpy(List<Object> actualFlow) {
         this.actualFlow = actualFlow;
     }
 
     @Override
     public void printWinner(Player winner) {
         actualFlow.add(String.format("Победитель: %s", winner.getName()));
+        actualFlow.add(winner);
     }
 }

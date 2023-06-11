@@ -15,18 +15,19 @@ public class GameTest {
     public void testFirstPlayerWins() {
         String scenario = "Тест ситуации, когда первый игрок набирает больше очков";
         try {
-            List<String> actualFlow = new ArrayList<>();
+            List<Object> actualFlow = new ArrayList<>();
             Dice diceSpy = new DiceSpy(actualFlow);
             GameWinnerPrinter winnerPrinterSpy = new GameWinnerPrinterSpy(actualFlow);
             Game game = new Game(diceSpy, winnerPrinterSpy);
             Player firstPlayer = new Player("First");
             Player secondPlayer = new Player("Second");
-            List<String> expectedFlow = List.of(
+            List<Object> expectedFlow = List.of(
                     "roll вызван впервые",
                     "Выброшено число 6",
                     "roll вызван второй раз",
                     "Выброшено число 1",
-                    "Победитель: First"
+                    "Победитель: First",
+                    firstPlayer
             );
 
             game.playGame(firstPlayer, secondPlayer);
@@ -44,18 +45,19 @@ public class GameTest {
     public void testSecondPlayerWins() {
         String scenario = "Тест ситуации, когда второй игрок набирает больше очков";
         try {
-            List<String> actualFlow = new ArrayList<>();
+            List<Object> actualFlow = new ArrayList<>();
             Dice diceSpy = new DiceSpy(actualFlow);
             GameWinnerPrinter winnerPrinterSpy = new GameWinnerPrinterSpy(actualFlow);
             Game game = new Game(diceSpy, winnerPrinterSpy);
             Player firstPlayer = new Player("First");
             Player secondPlayer = new Player("Second");
-            List<String> expectedFlow = List.of(
+            List<Object> expectedFlow = List.of(
                     "roll вызван впервые",
                     "Выброшено число 6",
                     "roll вызван второй раз",
                     "Выброшено число 1",
-                    "Победитель: Second"
+                    "Победитель: Second",
+                    secondPlayer
             );
 
             game.playGame(secondPlayer, firstPlayer);
@@ -73,21 +75,20 @@ public class GameTest {
     public void testSameNumberOfPoints() {
         String scenario = "Тест ситуации, когда игроки набирают одинаковое количество очков";
         try {
-            List<String> actualFlow = new ArrayList<>();
+            List<Object> actualFlow = new ArrayList<>();
             Dice diceSpy = new DiceSpy(true, actualFlow);
             GameWinnerPrinter winnerPrinterSpy = new GameWinnerPrinterSpy(actualFlow);
             Game game = new Game(diceSpy, winnerPrinterSpy);
             Player firstPlayer = new Player("First");
             Player secondPlayer = new Player("Second");
-            List<String> expectedFlow = List.of(
+            List<Object> expectedFlow = List.of(
                     "roll вызван впервые",
                     "Выброшено число 6",
                     "roll вызван второй раз",
-                    "Выброшено число 6",
-                    "Ничья"
+                    "Выброшено число 6"
             );
 
-            game.playGame(firstPlayer, secondPlayer);
+            Assertions.assertThrows(RuntimeException.class, () -> game.playGame(firstPlayer, secondPlayer));
 
             Assertions.assertEquals(expectedFlow.size(), actualFlow.size());
             for (int i = 0; i < expectedFlow.size(); i++) {

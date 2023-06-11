@@ -6,15 +6,15 @@ import java.util.List;
 
 public class DiceSpy implements Dice {
     private final boolean constant;
-    private final List<String> actualFlow;
+    private final List<Object> actualFlow;
     private boolean isFirstInputCall = true;
 
-    public DiceSpy(boolean constant, List<String> actualFlow) {
+    public DiceSpy(boolean constant, List<Object> actualFlow) {
         this.constant = constant;
         this.actualFlow = actualFlow;
     }
 
-    public DiceSpy(List<String> actualFlow) {
+    public DiceSpy(List<Object> actualFlow) {
         this.constant = false;
         this.actualFlow = actualFlow;
     }
