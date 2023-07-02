@@ -1,0 +1,132 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>homework-10</title>
+
+    <style>
+        h2 {
+            color: steelblue;
+        }
+
+        .formTab {
+            border: 1px solid steelblue;
+            width: 400px;
+            border-collapse: collapse;
+        }
+
+        .formTab td {
+            padding: 5px;
+        }
+
+        tr {
+            height: 20px;
+        }
+
+        .field {
+            width: 260px;
+        }
+
+        .studentTab {
+            border: 1px solid steelblue;
+            width: 600px;
+            border-collapse: collapse;
+        }
+
+        .studentTab tr td {
+            border: 1px solid steelblue;
+        }
+
+    </style>
+
+    <script>
+        function addStudent() {
+            const studentTable = document.getElementById("studentTable");
+            const studentName = document.getElementById("studentName")
+            const gender = document.getElementById("gender")
+            const birthday =  document.getElementById("birthday")
+            const age = Math.floor((new Date() - new Date(birthday.value)) / 1000 / 60 / 60 / 24 / 365).toString()
+
+            let row = studentTable.insertRow(1)
+            row.insertCell(0).innerHTML = studentName.value
+            row.insertCell(1).innerHTML = gender.options[gender.selectedIndex].text
+            row.insertCell(2).innerHTML = birthday.value
+            row.insertCell(3).innerHTML = age
+
+            let trs = studentTable.children[0].children
+            let tds = null
+            let averageAge = trs[trs.length - 1].children[1]
+            let averageAgeValue = 0;
+
+            for (let i = 1; i < trs.length - 2; i++) {
+                tds = trs[i].children
+                averageAgeValue += parseInt(tds[3].innerText)
+            }
+            averageAgeValue = Math.floor(averageAgeValue / (trs.length - 3))
+            averageAge.innerText = averageAgeValue
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<h2>
+    Форма добавления информации о студенте
+</h2>
+
+<p>
+<table id="inputForm" class="formTab">
+    <tbody>
+    <tr>
+        <td><label for="studentName">Имя студента:</label></td>
+        <td><input type="text" id="studentName" class="field"></td>
+    </tr>
+    <tr>
+        <td><label for="birthday">Дата рождения:</label></td>
+        <td><input id="birthday" type="date" value="30.03.1980" class="field"></td>
+    </tr>
+    <tr>
+        <td><label for="gender">Пол:</label></td>
+        <td>
+            <select id="gender" class="field">
+                <option value="1">мужчина</option>
+                <option value="2">женщина</option>
+            </select></td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type = "button" onclick = 'addStudent()'>Добавить</button></td>
+    </tr>
+    </tbody>
+</table>
+</p>
+
+<h2>
+    Таблица студентов
+</h2>
+
+<p>
+<table id="studentTable" class="studentTab">
+    <tr>
+        <td>Имя студента</td>
+        <td>Пол</td>
+        <td>Дата рождения</td>
+        <td>Возраст</td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td colspan="3">Средний возраст студентов</td>
+        <td>0</td>
+    </tr>
+</table>
+</p>
+
+
+</body>
+</html>
