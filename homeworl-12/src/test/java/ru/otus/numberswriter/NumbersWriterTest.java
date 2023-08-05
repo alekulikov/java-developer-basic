@@ -13,11 +13,10 @@ public class NumbersWriterTest {
         try {
             List<Object> actualMorferArguments = new ArrayList<>();
             MorferSpy morferSpy = new MorferSpy(actualMorferArguments);
-            Currency rub = new CurrencyRub();
-            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, rub);
+            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, Currency.RUB, new InputNumberValidator());
             List<Object> expectedMorferArguments = List.of(
                     0L,
-                    rub.getForms()
+                    Currency.RUB.getForms()
             );
             String expectedResult = "ноль morferTestResult";
             String actualResult = numbersWriter.getNumberInWords(0L);
@@ -38,11 +37,10 @@ public class NumbersWriterTest {
         try {
             List<Object> actualMorferArguments = new ArrayList<>();
             MorferSpy morferSpy = new MorferSpy(actualMorferArguments);
-            Currency rub = new CurrencyRub();
-            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, rub);
+            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, Currency.RUB, new InputNumberValidator());
             List<Object> expectedMorferArguments = List.of(
                     121999L,
-                    rub.getForms(),
+                    Currency.RUB.getForms(),
                     121L,
                     List.of("тысяча", "тысячи", "тысяч")
             );
@@ -65,11 +63,10 @@ public class NumbersWriterTest {
         try {
             List<Object> actualMorferArguments = new ArrayList<>();
             MorferSpy morferSpy = new MorferSpy(actualMorferArguments);
-            Currency rub = new CurrencyRub();
-            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, rub);
+            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, Currency.RUB, new InputNumberValidator());
             List<Object> expectedMorferArguments = List.of(
                     999999999999L,
-                    rub.getForms(),
+                    Currency.RUB.getForms(),
                     999L,
                     List.of("тысяча", "тысячи", "тысяч"),
                     999L,
@@ -96,15 +93,14 @@ public class NumbersWriterTest {
     }
 
     public void testNumberWithZerosInMiddle() {
-        String scenario = "Тест ситуации, когда на вход передается число с нулевыми разярадами";
+        String scenario = "Тест ситуации, когда на вход передается число с нулевыми разрядами";
         try {
             List<Object> actualMorferArguments = new ArrayList<>();
             MorferSpy morferSpy = new MorferSpy(actualMorferArguments);
-            Currency rub = new CurrencyRub();
-            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, rub);
+            NumbersWriter numbersWriter = new NumbersWriter(morferSpy, Currency.RUB, new InputNumberValidator());
             List<Object> expectedMorferArguments = List.of(
                     111000000222L,
-                    rub.getForms(),
+                    Currency.RUB.getForms(),
                     111L,
                     List.of("миллиард", "миллиарда", "миллиардов")
             );

@@ -2,7 +2,16 @@ package ru.otus.numberswriter;
 
 import java.util.List;
 
-public interface Currency {
+public enum Currency {
+    RUB(List.of("рубль", "рубля", "рублей")),
+    USD(List.of("доллар", "доллара", "долларов"));
+    private final List<String> forms;
 
-    List<String> getForms();
+    Currency(List<String> forms) {
+        this.forms = forms;
+    }
+
+    List<String> getForms() {
+        return forms;
+    }
 }

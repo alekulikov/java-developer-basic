@@ -51,12 +51,16 @@ public class NumbersWriter {
     private final Morfer morfer;
     private final Currency currency;
 
-    public NumbersWriter(Morfer morfer, Currency currency) {
+    private final Validator validator;
+
+    public NumbersWriter(Morfer morfer, Currency currency, Validator validator) {
         this.morfer = morfer;
         this.currency = currency;
+        this.validator = validator;
     }
 
-    public String getNumberInWords(Long number) {
+    public String getNumberInWords(Long number) throws IllegalArgumentException {
+        validator.validate(number);
         var partsOfNumber = new ArrayList<String>();
         partsOfNumber.add(morfer.morf(number, currency.getForms()));
         var ranges = Range.values();
